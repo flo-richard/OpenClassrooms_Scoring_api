@@ -4,6 +4,7 @@ from pydantic import BaseModel
 import dill as pickle
 import lime
 import numpy as np
+import xgboost as xgb
 
 #PATH = "E:/OpenClassrooms/Projet7/Data"
 
