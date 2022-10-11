@@ -42,8 +42,6 @@ class ScoringModel:
         df['ANNUITY_INCOME_RATE'] = df['AMT_ANNUITY'] / df['AMT_INCOME_TOTAL']
         df['PAYMENT_RATE'] = df['AMT_ANNUITY'] / df['AMT_CREDIT']
 
-        #print('YOLOOO ', df['INCOME_CREDIT_RATE'].values[0])
-
         req_info['INCOME_CREDIT_RATE'] = df['INCOME_CREDIT_RATE'].values[0]
         req_info['ANNUITY_INCOME_RATE'] = df['ANNUITY_INCOME_RATE'].values[0]
         req_info['PAYMENT_RATE'] = df['PAYMENT_RATE'].values[0]
@@ -82,3 +80,64 @@ class ScoringModel:
 
         return pd.DataFrame(expl_details.as_map()[1], columns=['Feature_idx', 'Scaled_value'])
         
+
+
+list = [
+    'Self-employed',
+    'School',
+    'University',
+    'Kindergarten',
+    'Government',
+    'Security Ministries',
+    'Legal Services',
+    'Postal',
+    'Military',
+    'Police',
+    'Security',
+    'Services',
+    'Religion',
+    'Medicine',
+    'Emergency',
+    'Electricity',
+    'Construction',
+    'Realtor',
+    'Housing',
+    'Hotel',
+    'Bank',
+    'Insurance',
+    'Mobile',
+    'Telecom',
+    'Culture',
+    'Advertising',
+    'Agriculture',
+    'Restaurant',
+    'Cleaning',
+    'Business Entity Type 1',
+    'Business Entity Type 2',
+    'Business Entity Type 3',
+    'Transport: type 1',
+    'Transport: type 2',
+    'Transport: type 3',
+    'Transport: type 4',
+    'Trade: type 1',
+    'Trade: type 2',
+    'Trade: type 3',
+    'Trade: type 4',
+    'Trade: type 5',
+    'Trade: type 6',
+    'Trade: type 7',
+    'Industry: type 1',
+    'Industry: type 2'
+    'Industry: type 3',
+    'Industry: type 4',
+    'Industry: type 5',
+    'Industry: type 6'
+    'Industry: type 7',
+    'Industry: type 8',
+    'Industry: type 9',
+    'Industry: type 10',
+    'Industry: type 11',
+    'Industry: type 12',
+    'Industry: type 13',
+    'Other'
+]
