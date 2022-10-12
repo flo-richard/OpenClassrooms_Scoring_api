@@ -29,6 +29,8 @@ class ScoringModel:
 
         self.explainer = pickle.load(open('Pickled_objects/explainer.pkl', 'rb')) #load lime explainer
 
+        self.distributions = pickle.load(open('Pickled_objects/distributions.pkl', 'rb'))
+
 
 
     def preprocessing(self, df: pd.DataFrame, req_info: dict):
@@ -78,66 +80,80 @@ class ScoringModel:
             num_features=6
         )
 
-        return pd.DataFrame(expl_details.as_map()[1], columns=['Feature_idx', 'Scaled_value'])
+        return pd.DataFrame(expl_details.as_map()[1], columns=['Feature_idx', 'Scaled_value']), expl_details.as_list()
+
+    def return_distributions(self, expl_details_map):
+
+        names_main_features = []
+        for i in expl_details_map['Feature_idx']:
+            names_main_features.append(self.all_features[i])
+
+        feat_to_plot = [i for i in self.distributions if i in names_main_features]
+
+        distributions_to_plot = {}
+        for i in feat_to_plot:
+            distributions_to_plot[i] = self.distributions[i]
+            
+        return distributions_to_plot
         
 
 
-list = [
-    'Self-employed',
-    'School',
-    'University',
-    'Kindergarten',
-    'Government',
-    'Security Ministries',
-    'Legal Services',
-    'Postal',
-    'Military',
-    'Police',
-    'Security',
-    'Services',
-    'Religion',
-    'Medicine',
-    'Emergency',
-    'Electricity',
-    'Construction',
-    'Realtor',
-    'Housing',
-    'Hotel',
-    'Bank',
-    'Insurance',
-    'Mobile',
-    'Telecom',
-    'Culture',
-    'Advertising',
-    'Agriculture',
-    'Restaurant',
-    'Cleaning',
-    'Business Entity Type 1',
-    'Business Entity Type 2',
-    'Business Entity Type 3',
-    'Transport: type 1',
-    'Transport: type 2',
-    'Transport: type 3',
-    'Transport: type 4',
-    'Trade: type 1',
-    'Trade: type 2',
-    'Trade: type 3',
-    'Trade: type 4',
-    'Trade: type 5',
-    'Trade: type 6',
-    'Trade: type 7',
-    'Industry: type 1',
-    'Industry: type 2'
-    'Industry: type 3',
-    'Industry: type 4',
-    'Industry: type 5',
-    'Industry: type 6'
-    'Industry: type 7',
-    'Industry: type 8',
-    'Industry: type 9',
-    'Industry: type 10',
-    'Industry: type 11',
-    'Industry: type 12',
-    'Industry: type 13',
-    'Other'
-]
+# list = [
+#     'Self-employed',
+#     'School',
+#     'University',
+#     'Kindergarten',
+#     'Government',
+#     'Security Ministries',
+#     'Legal Services',
+#     'Postal',
+#     'Military',
+#     'Police',
+#     'Security',
+#     'Services',
+#     'Religion',
+#     'Medicine',
+#     'Emergency',
+#     'Electricity',
+#     'Construction',
+#     'Realtor',
+#     'Housing',
+#     'Hotel',
+#     'Bank',
+#     'Insurance',
+#     'Mobile',
+#     'Telecom',
+#     'Culture',
+#     'Advertising',
+#     'Agriculture',
+#     'Restaurant',
+#     'Cleaning',
+#     'Business Entity Type 1',
+#     'Business Entity Type 2',
+#     'Business Entity Type 3',
+#     'Transport: type 1',
+#     'Transport: type 2',
+#     'Transport: type 3',
+#     'Transport: type 4',
+#     'Trade: type 1',
+#     'Trade: type 2',
+#     'Trade: type 3',
+#     'Trade: type 4',
+#     'Trade: type 5',
+#     'Trade: type 6',
+#     'Trade: type 7',
+#     'Industry: type 1',
+#     'Industry: type 2'
+#     'Industry: type 3',
+#     'Industry: type 4',
+#     'Industry: type 5',
+#     'Industry: type 6'
+#     'Industry: type 7',
+#     'Industry: type 8',
+#     'Industry: type 9',
+#     'Industry: type 10',
+#     'Industry: type 11',
+#     'Industry: type 12',
+#     'Industry: type 13',
+#     'Other'
+# ]
