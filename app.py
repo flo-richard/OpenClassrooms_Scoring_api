@@ -50,3 +50,6 @@ async def get_prediction(info : Request):
         'Explainer list': expl_details_list,
         'Distributions': distributions
     }
+
+if __name__ == '__main__':
+    main()
