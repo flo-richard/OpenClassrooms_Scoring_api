@@ -36,7 +36,7 @@ async def get_prediction(info : Request):
     print('Prediction :', prediction)
 
     print('Computing explainer...')
-    expl_details_map, expl_details_list = Model.explain_prediction(df_scaled)
+    expl_details_map, expl_details_list = Model.explain_prediction(df)
     print('Done')
 
     distributions = Model.return_distributions(expl_details_map)

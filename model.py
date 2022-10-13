@@ -59,9 +59,9 @@ class ScoringModel:
 
         # Scaler
 
-        df = pd.DataFrame(self.transformers['Scaler'].transform(df), columns = self.all_features)
+        df_scaled = pd.DataFrame(self.transformers['Scaler'].transform(df), columns = self.all_features)
         
-        return df, req_info
+        return df_scaled, req_info
 
 
 
