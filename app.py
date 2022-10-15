@@ -7,16 +7,6 @@ import pandas as pd
 app = FastAPI()
 Model = ScoringModel()
 
-# @app.get('/')
-# def index():
-#     return {'message': 'Hello World'}
-
-#@app.get('/{name}')
-#def get_name(name: str):    
-#    return {'message': f'Hello, {name}'}
-
-# if __name__ == '__main__':
-#     uvicorn.run(app, hist='127.0.0.1', port=8000)
 
 
 @app.post('/getPrediction')
@@ -24,15 +14,14 @@ async def get_prediction(info : Request):
     req_info = await info.json()
     df = pd.DataFrame([req_info])
 
-    #print(req_info)
 
-    # Ajouter les fonctions qui font le traitement ici
+
     print('Preprocessing...')
-    df_scaled, req_info = Model.preprocessing(df, req_info)
+    df, req_info = Model.preprocessing(df, req_info)
     print('Preprocessing ok')
 
     print('Computing prediction...')
-    prediction = Model.predict(df_scaled)        
+    prediction, probas = Model.predict(df)        
     print('Prediction :', prediction)
 
     print('Computing explainer...')
@@ -40,11 +29,12 @@ async def get_prediction(info : Request):
     print('Done')
 
     distributions = Model.return_distributions(expl_details_map)
-    
-
+    print('Done')
+    print(probas)
     return {
         'Status': 'Success',
         'Prediction': int(prediction),
+        'Prediction probabilities': probas,
         'User info': req_info,
         'Explainer map': expl_details_map.to_dict('list'),
         'Explainer list': expl_details_list,

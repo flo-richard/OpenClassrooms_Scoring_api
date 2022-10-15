@@ -6,37 +6,30 @@ import lime
 import numpy as np
 import xgboost as xgb
 
-#PATH = "E:/OpenClassrooms/Projet7/Data"
-
-#class Id(BaseModel):
-#    id: int
 
 class ScoringModel:
     def __init__(self):
-
         
 
-        self.list_features = pickle.load(open('Pickled_objects/features.pkl', 'rb'))
+        self.list_features = pickle.load(open('Pickles/features.pkl', 'rb'))
         self.all_features = self.list_features['all_features']
         self.continuous_features = self.list_features['continuous_features']
         self.categorical_features = self.list_features['categorical_features']        
 
-        self.model = pickle.load(open('Pickled_objects/xgb.pkl', 'rb')) # load trained model
+        self.model = pickle.load(open('Pickles/xgb.pkl', 'rb')) # load trained model
 
-        self.transformers = pickle.load(open('Pickled_objects/transformers.pkl', 'rb')) #load transformers
-        self.imputers = pickle.load(open('Pickled_objects/imputers.pkl', 'rb')) #load imputers
+        self.transformers = pickle.load(open('Pickles/transformers.pkl', 'rb')) #load transformers
+        self.imputers = pickle.load(open('Pickles/imputers.pkl', 'rb')) #load imputers
         self.list_transformers = [i for i in self.transformers]  #list of transformers names (columns to be transformed)
 
-        self.explainer = pickle.load(open('Pickled_objects/explainer.pkl', 'rb')) #load lime explainer
+        self.explainer = pickle.load(open('Pickles/explainer.pkl', 'rb')) #load lime explainer
 
-        self.distributions = pickle.load(open('Pickled_objects/distributions.pkl', 'rb'))
+        self.distributions = pickle.load(open('Pickles/distributions.pkl', 'rb'))
 
 
 
     def preprocessing(self, df: pd.DataFrame, req_info: dict):
-
-        # vérifier si les clés dans self.features sont bien dans payload
-        # formater payload au bon format (bonnes clés, avec bonnes valeurs)
+        """Preprocess data (feature engineering, imputers, label encoders"""
 
         # Feature engineering
 
@@ -56,19 +49,21 @@ class ScoringModel:
         # Label Encoders
         for i in self.list_transformers[:-1]:
             df[i] = self.transformers[i].transform(df[i])
-
-        # Scaler
-
-        df_scaled = pd.DataFrame(self.transformers['Scaler'].transform(df), columns = self.all_features)
         
-        return df_scaled, req_info
+        return df, req_info
 
 
 
     def predict(self, df: pd.DataFrame):
 
         prediction = self.model.predict(df.values)
-        return prediction
+
+        probas = [
+            float(self.model.predict_proba(df.values.reshape(1,-1))[0][0]),
+            float(self.model.predict_proba(df.values.reshape(1,-1))[0][1])
+        ]
+
+        return prediction, probas
 
 
 
@@ -79,6 +74,8 @@ class ScoringModel:
             self.model.predict_proba,
             num_features=6
         )
+
+
 
         return pd.DataFrame(expl_details.as_map()[1], columns=['Feature_idx', 'Scaled_value']), expl_details.as_list()
 
