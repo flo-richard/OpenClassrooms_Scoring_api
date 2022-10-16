@@ -47,7 +47,7 @@ class ScoringModel:
         df[self.categorical_features] = self.imputers['imputer_most_frequent'].transform(df[self.categorical_features])
 
         # Label Encoders
-        for i in self.list_transformers[:-1]:
+        for i in self.list_transformers:
             df[i] = self.transformers[i].transform(df[i])
         
         return df, req_info

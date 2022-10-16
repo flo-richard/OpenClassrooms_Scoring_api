@@ -30,7 +30,7 @@ async def get_prediction(info : Request):
 
     distributions = Model.return_distributions(expl_details_map)
     print('Done')
-    print(probas)
+
     return {
         'Status': 'Success',
         'Prediction': int(prediction),
