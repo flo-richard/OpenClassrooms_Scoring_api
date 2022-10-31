@@ -50,7 +50,7 @@ class ScoringModel:
         for i in self.list_transformers:
             df[i] = self.transformers[i].transform(df[i])
         
-        return df, req_info
+        return df
 
 
 
