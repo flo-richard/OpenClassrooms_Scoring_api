@@ -28,7 +28,8 @@ class ScoringModel:
 
         self.distributions = pickle.load(open('Pickles/distributions.pkl', 'rb'))
 
-
+    def create_data_user(self, id : int):
+        return self.data.loc[id]
 
     def preprocessing(self, df: pd.DataFrame):
         """Preprocess data (feature engineering, imputers, label encoders"""

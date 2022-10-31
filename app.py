@@ -14,7 +14,7 @@ async def get_prediction(info : dict):
 
     id_number = await info.json()
     print(id_number)
-    id = id_number['id']
+    id = int(id_number['id'])
     print(id)
     if id not in Model.data.index:
         return {
@@ -24,7 +24,7 @@ async def get_prediction(info : dict):
     
     else:
 
-        df = Model.data.loc[id]
+        df = Model.create_data_user(id)
 
 
         print('Preprocessing...')
