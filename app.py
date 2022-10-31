@@ -12,7 +12,7 @@ Model = ScoringModel()
 @app.post('/getPrediction')
 async def get_prediction(info : int):
 
-    id = await info.json()['id']
+    id = await info.json()
 
     if id not in Lodel.data.index:
         return {
