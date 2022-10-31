@@ -10,7 +10,7 @@ Model = ScoringModel()
 
 
 @app.post('/getPrediction')
-async def get_prediction(info : int):
+async def get_prediction(info : dict):
 
     id_number = await info.json()
     id = id_number['id']
