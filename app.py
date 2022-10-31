@@ -26,6 +26,9 @@ async def get_prediction(info : Request):
 
         df = Model.create_data_user(id)
 
+        df_og = df.copy(deep=True)
+        print(df_og.to_dict())
+
 
         print('Preprocessing...')
         df = Model.preprocessing(df)
@@ -46,7 +49,7 @@ async def get_prediction(info : Request):
             'Status': 'Success',
             'Prediction': int(prediction),
             'Prediction probabilities': probas,
-            'User info': df.to_dict(),
+            'User info': df_og.to_dict(),
             'Explainer map': expl_details_map.to_dict('list'),
             'Explainer list': expl_details_list,
             'Distributions': distributions
