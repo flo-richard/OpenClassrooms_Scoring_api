@@ -12,7 +12,8 @@ Model = ScoringModel()
 @app.post('/getPrediction')
 async def get_prediction(info : int):
 
-    id = await info.json()
+    id_number = await info.json()
+    id = id_number['id']
 
     if id not in Model.data.index:
         return {
