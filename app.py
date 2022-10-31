@@ -14,7 +14,7 @@ async def get_prediction(info : int):
 
     id = await info.json()
 
-    if id not in Lodel.data.index:
+    if id not in Model.data.index:
         return {
             'Status': 'Error',
             'Message': 'Error: Unknown ID'
