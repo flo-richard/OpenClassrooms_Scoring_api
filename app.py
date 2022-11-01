@@ -26,12 +26,12 @@ async def get_prediction(info : Request):
 
         df = Model.create_data_user(id)
 
-        df_og = df.copy(deep=True)
-        print(df_og.to_dict())
+        #df_og = df.copy(deep=True)
+        #print(df_og.to_dict())
 
 
         print('Preprocessing...')
-        df = Model.preprocessing(df)
+        df, df_og = Model.preprocessing(df)
         print('Preprocessing ok')
 
         print('Computing prediction...')

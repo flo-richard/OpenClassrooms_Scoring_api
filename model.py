@@ -42,6 +42,8 @@ class ScoringModel:
 
         df['DAYS_EMPLOYED'] = - df['DAYS_EMPLOYED'] 
 
+        df_og = df.copy(deep=True)
+
         # Imputers
 
         df[self.continuous_features] = self.imputers['imputer_mean'].transform(df[self.continuous_features])
@@ -51,7 +53,7 @@ class ScoringModel:
         for i in self.list_transformers:
             df[i] = self.transformers[i].transform(df[i])
         
-        return df
+        return df, df_og
 
 
 
