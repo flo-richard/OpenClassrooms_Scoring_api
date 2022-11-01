@@ -11,4 +11,4 @@ scikit_learn==1.1.1
 uvicorn==0.18.3
 aiofiles==0.6.0
 xgboost==1.6.2
-
+plotly==5.11.0
