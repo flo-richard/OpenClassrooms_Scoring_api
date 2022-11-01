@@ -2,6 +2,8 @@ import uvicorn
 from fastapi import FastAPI, Request
 from model import ScoringModel
 import pandas as pd
+import plotly
+print(plotly.__version__)
 
 
 app = FastAPI()
@@ -25,9 +27,6 @@ async def get_prediction(info : Request):
     else:
 
         df = Model.create_data_user(id)
-
-        #df_og = df.copy(deep=True)
-        #print(df_og.to_dict())
 
 
         print('Preprocessing...')
