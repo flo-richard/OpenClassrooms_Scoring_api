@@ -2,8 +2,6 @@ import uvicorn
 from fastapi import FastAPI, Request
 from model import ScoringModel
 import pandas as pd
-import plotly
-print(plotly.__version__)
 
 
 app = FastAPI()
@@ -34,7 +32,7 @@ async def get_prediction(info : Request):
         print('Preprocessing ok')
 
         print('Computing prediction...')
-        prediction, probas = Model.predict(df)        
+        prediction, score = Model.predict(df)        
         print('Prediction :', prediction)
 
         print('Computing explainer...')
@@ -47,7 +45,8 @@ async def get_prediction(info : Request):
         return {
             'Status': 'Success',
             'Prediction': int(prediction),
-            'Prediction probabilities': probas,
+            'Score': score,
+            'Threshold': Model.threshold,
             'User info': df_og.to_dict(),
             'Explainer map': expl_details_map.to_dict('list'),
             'Explainer list': expl_details_list,

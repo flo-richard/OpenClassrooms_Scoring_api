@@ -10,6 +10,7 @@ import xgboost as xgb
 class ScoringModel:
     def __init__(self):
         
+        self.threshold = 0.696969
         self.list_features = pickle.load(open('Pickles/features.pkl', 'rb'))
         self.all_features = self.list_features['all_features']
         self.continuous_features = self.list_features['continuous_features']
@@ -59,14 +60,10 @@ class ScoringModel:
 
     def predict(self, df: pd.DataFrame):
 
-        prediction = self.model.predict(df.values)
+        proba = self.model.predict_proba(df.values.reshape(1,-1))[0][1]
+        prediction = 1 if proba > self.threshold else 0
 
-        probas = [
-            float(self.model.predict_proba(df.values.reshape(1,-1))[0][0]),
-            float(self.model.predict_proba(df.values.reshape(1,-1))[0][1])
-        ]
-
-        return prediction, probas
+        return prediction, proba
 
 
 
