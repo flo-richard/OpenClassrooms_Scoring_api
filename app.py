@@ -46,7 +46,7 @@ async def get_prediction(info : Request):
             'Status': 'Success',
             'Prediction': int(prediction),
             'Score': score,
-            'Threshold': Model.threshold,
+            'Threshold': round(Model.threshold, 3),
             'User info': df_og.to_dict(),
             'Explainer map': expl_details_map.to_dict('list'),
             'Explainer list': expl_details_list,

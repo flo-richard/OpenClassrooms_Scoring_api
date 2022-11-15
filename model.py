@@ -62,8 +62,11 @@ class ScoringModel:
 
         proba = self.model.predict_proba(df.values.reshape(1,-1))[0][1]
         prediction = 1 if proba > self.threshold else 0
+        score = round(float(proba), 3)
+        print(score)
+        print(type(score))
 
-        return prediction, proba
+        return prediction, score
 
 
 
